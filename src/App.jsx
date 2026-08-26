@@ -151,7 +151,11 @@ function App() {
   };
 
   const handleOpenInstagram = () => {
-    window.open('https://www.instagram.com/_karan_2412?igsi=MXIydGYweTFucm1tZw==', '_blank', 'noopener,noreferrer');
+    if (instagramUnlocked) {
+      window.open('https://www.instagram.com/_karan_2412?igsi=MXIydGYweTFucm1tZw==', '_blank', 'noopener,noreferrer');
+    } else {
+      handleOpenAuthModal('instagram');
+    }
   };
 
   const getModalText = () => {
