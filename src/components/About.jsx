@@ -41,7 +41,7 @@ export default function About({ gpaUnlocked, onOpenGpaModal }) {
               Passionate Frontend Developer & Analytical Problem Solver
             </h4>
             <p className="text-slate-650 dark:text-slate-300 leading-relaxed text-base sm:text-lg">
-              I specialize in creating pixel-perfect, highly responsive interfaces using **React.js** and **Tailwind CSS**. Having a background in **Computer Applications (BCA)** and active experience as a **Technical Support Engineer**, I bring a unique dual-perspective to software development:
+              I specialize in creating pixel-perfect, highly responsive interfaces using <strong className="text-slate-900 dark:text-white font-bold">React.js</strong> and <strong className="text-slate-900 dark:text-white font-bold">Tailwind CSS</strong>. Having a background in <strong className="text-slate-900 dark:text-white font-bold">Computer Applications (BCA)</strong> and active experience as a <strong className="text-slate-900 dark:text-white font-bold">Technical Support Engineer</strong>, I bring a unique dual-perspective to software development:
             </p>
             <ul className="space-y-3.5">
               {[
