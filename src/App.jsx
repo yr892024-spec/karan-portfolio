@@ -19,7 +19,7 @@ function App() {
   const [scrollProgress, setScrollProgress] = useState(0);
 
   // Passcode-protected states
-  const [phoneUnlocked, setPhoneUnlocked] = useState(false);
+  const [phoneUnlocked, setPhoneUnlocked] = useState(true);
   const [gpaUnlocked, setGpaUnlocked] = useState(false);
   const [roadMapUnlocked, setRoadMapUnlocked] = useState(false);
   const [instagramUnlocked, setInstagramUnlocked] = useState(false);
