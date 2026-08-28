@@ -8,6 +8,7 @@ import Experience from './components/Experience';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import CommandPalette from './components/CommandPalette';
+import ToastContainer from './components/ToastContainer';
 import { X, Lock, Unlock, AlertTriangle, BookOpen, Terminal, CheckCircle2 } from 'lucide-react';
 
 function App() {
@@ -95,17 +96,33 @@ function App() {
       setTimeout(() => {
         // Apply unlock based on active type
         if (activeModalType === 'theme') {
-          setTheme(prev => prev === 'dark' ? 'light' : 'dark');
+          const nextTheme = theme === 'dark' ? 'light' : 'dark';
+          setTheme(nextTheme);
+          window.dispatchEvent(new CustomEvent('show-toast', { 
+            detail: { message: `System theme transitioned to ${nextTheme.toUpperCase()} mode.`, type: 'info' } 
+          }));
         } else if (activeModalType === 'phone') {
           setPhoneUnlocked(true);
+          window.dispatchEvent(new CustomEvent('show-toast', { 
+            detail: { message: 'Developer phone records decrypted successfully.', type: 'success' } 
+          }));
         } else if (activeModalType === 'gpa') {
           setGpaUnlocked(true);
+          window.dispatchEvent(new CustomEvent('show-toast', { 
+            detail: { message: 'Official GPA score transcripts decrypted.', type: 'success' } 
+          }));
         } else if (activeModalType === 'roadmap') {
           setRoadMapUnlocked(true);
           setIsRoadmapViewerOpen(true);
+          window.dispatchEvent(new CustomEvent('show-toast', { 
+            detail: { message: 'React.js Concept Roadmap document unlocked.', type: 'success' } 
+          }));
         } else if (activeModalType === 'instagram') {
           setInstagramUnlocked(true);
           window.open('https://www.instagram.com/_karan_2412?igsi=MXIydGYweTFucm1tZw==', '_blank', 'noopener,noreferrer');
+          window.dispatchEvent(new CustomEvent('show-toast', { 
+            detail: { message: 'Developer Instagram profile decrypted.', type: 'success' } 
+          }));
         }
 
         // Close authorization form
@@ -116,6 +133,9 @@ function App() {
       }, 850);
     } else {
       setErrorMsg('Access Denied. Passcode is invalid.');
+      window.dispatchEvent(new CustomEvent('show-toast', { 
+        detail: { message: 'Auth validation failure: Invalid passcode.', type: 'error' } 
+      }));
     }
   };
 
@@ -132,6 +152,9 @@ function App() {
     setGpaUnlocked(true);
     setRoadMapUnlocked(true);
     setInstagramUnlocked(true);
+    window.dispatchEvent(new CustomEvent('show-toast', { 
+      detail: { message: 'All secure credentials and files decrypted.', type: 'warning' } 
+    }));
   };
 
   const handleLockAll = () => {
@@ -139,6 +162,9 @@ function App() {
     setGpaUnlocked(false);
     setRoadMapUnlocked(false);
     setInstagramUnlocked(false);
+    window.dispatchEvent(new CustomEvent('show-toast', { 
+      detail: { message: 'Permissions revoked. Secure variables locked.', type: 'warning' } 
+    }));
   };
 
   const handleDownloadCv = () => {
@@ -148,6 +174,9 @@ function App() {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+    window.dispatchEvent(new CustomEvent('show-toast', { 
+      detail: { message: 'Developer Resume document downloaded successfully.', type: 'success' } 
+    }));
   };
 
   const handleOpenInstagram = () => {
@@ -205,6 +234,9 @@ function App() {
   return (
     <div className="relative min-h-screen bg-slate-50 text-slate-800 dark:bg-dark-950 dark:text-slate-100 selection:bg-primary-500/30 selection:text-primary-600 dark:selection:text-primary-300 transition-colors duration-300">
       
+      {/* Floating Developer Toast Notifications */}
+      <ToastContainer />
+
       {/* Scroll Progress Bar */}
       <div 
         className="fixed top-0 left-0 h-1 bg-gradient-to-r from-primary-500 via-emerald-500 to-accent-500 z-50 transition-all duration-100 shadow-md shadow-primary-500/30" 
@@ -278,7 +310,7 @@ function App() {
             <h4 className="text-base font-bold text-slate-900 dark:text-white mb-2">
               {modalDetails.title}
             </h4>
-            <p className="text-slate-500 dark:text-slate-400 mb-6 leading-relaxed text-xs">
+            <p className="text-slate-505 dark:text-slate-400 mb-6 leading-relaxed text-xs">
               {modalDetails.desc}
             </p>
 
@@ -304,7 +336,7 @@ function App() {
               )}
 
               {unlocked && (
-                <div className="p-3 rounded-lg bg-emerald-50 dark:bg-emerald-950/20 border border-emerald-250 dark:border-emerald-900 text-emerald-600 dark:text-emerald-555 text-center font-bold text-xs">
+                <div className="p-3 rounded-lg bg-emerald-50 dark:bg-emerald-955/20 border border-emerald-250 dark:border-emerald-900 text-emerald-600 dark:text-emerald-555 text-center font-bold text-xs">
                   ACCESS GRANTED! Processing...
                 </div>
               )}
@@ -388,7 +420,7 @@ function App() {
                   </div>
 
                   <div className="bg-slate-50 dark:bg-dark-955 border border-slate-200 dark:border-dark-850 p-4 rounded-xl">
-                    <span className="block text-emerald-550 dark:text-emerald-455 font-bold mb-2">LEVEL_03: HOOKS ENGINE</span>
+                    <span className="block text-emerald-555 dark:text-emerald-455 font-bold mb-2">LEVEL_03: HOOKS ENGINE</span>
                     <ul className="space-y-1.5 text-slate-700 dark:text-slate-400">
                       <li>&bull; useState: values update</li>
                       <li>&bull; useEffect: side effects</li>

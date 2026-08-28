@@ -47,6 +47,25 @@ export default function Contact({ phoneUnlocked, onOpenPhoneModal }) {
     });
   };
 
+  const handleCopyEmail = (e) => {
+    e.preventDefault();
+    navigator.clipboard.writeText('yr892024@gmail.com');
+    window.dispatchEvent(new CustomEvent('show-toast', { 
+      detail: { message: 'Copied email "yr892024@gmail.com" to clipboard.', type: 'success' } 
+    }));
+  };
+
+  const handleCopyPhone = () => {
+    if (phoneUnlocked) {
+      navigator.clipboard.writeText('+917434987924');
+      window.dispatchEvent(new CustomEvent('show-toast', { 
+        detail: { message: 'Copied phone number "+91 7434987924" to clipboard.', type: 'success' } 
+      }));
+    } else {
+      onOpenPhoneModal();
+    }
+  };
+
   const toggleSkill = (id) => {
     setSelectedSkills(prev => ({
       ...prev,
@@ -91,6 +110,9 @@ export default function Contact({ phoneUnlocked, onOpenPhoneModal }) {
     if (now - lastHmrTriggered.current > 4000) {
       lastHmrTriggered.current = now;
       window.dispatchEvent(new CustomEvent('vite-hmr-update', { detail: 'Contact.jsx' }));
+      window.dispatchEvent(new CustomEvent('show-toast', { 
+        detail: { message: 'Hot Module Replacement (HMR) updated src/components/Contact.jsx.', type: 'vite' } 
+      }));
     }
   };
 
@@ -144,6 +166,10 @@ export default function Contact({ phoneUnlocked, onOpenPhoneModal }) {
           isKeyError: false,
         });
         setFormData({ name: '', email: '', subject: '', message: '' });
+
+        window.dispatchEvent(new CustomEvent('show-toast', { 
+          detail: { message: 'Message sent successfully! API routing finished.', type: 'success' } 
+        }));
       } else {
         const isInvalidKey = result.message && (
           result.message.toLowerCase().includes('form id') || 
@@ -164,6 +190,10 @@ export default function Contact({ phoneUnlocked, onOpenPhoneModal }) {
             : result.message || 'Something went wrong. Please check your network and try again.',
           isKeyError: isInvalidKey,
         });
+
+        window.dispatchEvent(new CustomEvent('show-toast', { 
+          detail: { message: `API Submission failed: ${result.message || 'Network error'}`, type: 'error' } 
+        }));
       }
     } catch (error) {
       await appendLog('>> [ERROR] TIMEOUT: Connection handshake aborted by client socket.', 200);
@@ -173,6 +203,10 @@ export default function Contact({ phoneUnlocked, onOpenPhoneModal }) {
         message: 'Failed to send message. Please check your connection or email directly at yr892024@gmail.com.',
         isKeyError: false,
       });
+
+      window.dispatchEvent(new CustomEvent('show-toast', { 
+        detail: { message: 'Socket timeout. Connection refused.', type: 'error' } 
+      }));
     }
   };
 
@@ -263,7 +297,10 @@ export default function Contact({ phoneUnlocked, onOpenPhoneModal }) {
               </p>
 
               <div className="space-y-4 pt-4">
-                <div className="flex items-center space-x-3 text-slate-700 dark:text-slate-300">
+                <div 
+                  onClick={handleCopyEmail}
+                  className="flex items-center space-x-3 text-slate-700 dark:text-slate-300 cursor-pointer hover:opacity-85"
+                >
                   <div className="p-2.5 bg-slate-50 dark:bg-dark-950 border border-slate-200 dark:border-dark-850 rounded-xl text-primary-600 dark:text-primary-400">
                     <Mail className="w-5 h-5" />
                   </div>
@@ -276,12 +313,8 @@ export default function Contact({ phoneUnlocked, onOpenPhoneModal }) {
                 </div>
 
                 <div 
-                  onClick={() => {
-                    if (!phoneUnlocked) {
-                      onOpenPhoneModal();
-                    }
-                  }}
-                  className={`flex items-center space-x-3 text-slate-700 dark:text-slate-305 ${!phoneUnlocked ? 'cursor-pointer hover:opacity-85' : ''}`}
+                  onClick={handleCopyPhone}
+                  className={`flex items-center space-x-3 text-slate-700 dark:text-slate-305 ${!phoneUnlocked ? 'cursor-pointer hover:opacity-85' : 'cursor-pointer hover:opacity-85'}`}
                 >
                   <div className="p-2.5 bg-slate-50 dark:bg-dark-950 border border-slate-200 dark:border-dark-850 rounded-xl text-accent-600 dark:text-accent-400">
                     <Phone className="w-5 h-5" />
@@ -385,7 +418,7 @@ export default function Contact({ phoneUnlocked, onOpenPhoneModal }) {
               <button
                 type="submit"
                 disabled={status.submitting}
-                className="w-full flex items-center justify-center py-4 font-bold text-white dark:text-dark-950 bg-gradient-to-r from-primary-500 to-accent-500 dark:from-primary-400 dark:to-accent-400 hover:from-primary-400 hover:to-accent-400 dark:hover:from-primary-300 dark:hover:to-accent-300 rounded-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed group text-center cursor-pointer"
+                className="w-full flex items-center justify-center py-4 font-bold text-white dark:text-dark-955 bg-gradient-to-r from-primary-500 to-accent-500 dark:from-primary-400 dark:to-accent-400 hover:from-primary-400 hover:to-accent-400 dark:hover:from-primary-300 dark:hover:to-accent-300 rounded-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed group text-center cursor-pointer"
               >
                 {status.submitting ? (
                   <>

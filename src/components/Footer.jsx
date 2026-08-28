@@ -44,6 +44,24 @@ export default function Footer({
     }
   };
 
+  const handleCopyEmail = () => {
+    navigator.clipboard.writeText('yr892024@gmail.com');
+    window.dispatchEvent(new CustomEvent('show-toast', { 
+      detail: { message: 'Copied email "yr892024@gmail.com" to clipboard.', type: 'success' } 
+    }));
+  };
+
+  const handleCopyPhone = () => {
+    if (phoneUnlocked) {
+      navigator.clipboard.writeText('+917434987924');
+      window.dispatchEvent(new CustomEvent('show-toast', { 
+        detail: { message: 'Copied phone number "+91 7434987924" to clipboard.', type: 'success' } 
+      }));
+    } else {
+      onOpenPhoneModal();
+    }
+  };
+
   return (
     <footer className="bg-slate-50 dark:bg-dark-950 border-t border-slate-200 dark:border-dark-900 py-12 relative overflow-hidden transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -83,17 +101,16 @@ export default function Footer({
             <span className="text-[10px] text-slate-500 dark:text-slate-500 font-bold uppercase tracking-wider flex items-center">
               🕒 {istTime}
             </span>
-            <span className="flex items-center">
+            <span 
+              onClick={handleCopyEmail}
+              className="flex items-center cursor-pointer hover:text-primary-500"
+            >
               <Mail className="w-3.5 h-3.5 mr-1 text-accent-500" />
               yr892024@gmail.com
             </span>
             <span 
-              onClick={() => {
-                if (!phoneUnlocked) {
-                  onOpenPhoneModal();
-                }
-              }}
-              className={`flex items-center ${!phoneUnlocked ? 'cursor-pointer hover:text-primary-500' : ''}`}
+              onClick={handleCopyPhone}
+              className="flex items-center cursor-pointer hover:text-primary-500"
             >
               <Phone className="w-3.5 h-3.5 mr-1 text-primary-500" />
               {phoneUnlocked ? '+91 7434987924' : '+91 XXXXX XXXXX (🔒)'}

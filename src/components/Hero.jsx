@@ -174,6 +174,24 @@ export default function Hero({ phoneUnlocked, onOpenPhoneModal, onDecryptAll }) 
     setCmdInput('');
   };
 
+  const handleCopyEmail = () => {
+    navigator.clipboard.writeText('yr892024@gmail.com');
+    window.dispatchEvent(new CustomEvent('show-toast', { 
+      detail: { message: 'Copied email "yr892024@gmail.com" to clipboard.', type: 'success' } 
+    }));
+  };
+
+  const handleCopyPhone = () => {
+    if (phoneUnlocked) {
+      navigator.clipboard.writeText('+917434987924');
+      window.dispatchEvent(new CustomEvent('show-toast', { 
+        detail: { message: 'Copied phone number "+91 7434987924" to clipboard.', type: 'success' } 
+      }));
+    } else {
+      onOpenPhoneModal();
+    }
+  };
+
   return (
     <section 
       id="home" 
@@ -274,17 +292,16 @@ export default function Hero({ phoneUnlocked, onOpenPhoneModal, onDecryptAll }) 
                 <MapPin className="w-3.5 h-3.5 text-primary-500" />
                 <span>Surat, Gujarat</span>
               </div>
-              <div className="flex items-center space-x-1.5 bg-white dark:bg-dark-900 border border-slate-205 dark:border-dark-850 px-3 py-1.5 rounded-lg shadow-sm">
+              <div 
+                onClick={handleCopyEmail}
+                className="flex items-center space-x-1.5 bg-white dark:bg-dark-900 border border-slate-205 dark:border-dark-850 px-3 py-1.5 rounded-lg shadow-sm cursor-pointer hover:bg-slate-50 dark:hover:bg-dark-850"
+              >
                 <Mail className="w-3.5 h-3.5 text-accent-500" />
                 <span>yr892024@gmail.com</span>
               </div>
               <div 
-                onClick={() => {
-                  if (!phoneUnlocked) {
-                    onOpenPhoneModal();
-                  }
-                }}
-                className={`flex items-center space-x-1.5 bg-white dark:bg-dark-900 border border-slate-205 dark:border-dark-850 px-3 py-1.5 rounded-lg shadow-sm ${!phoneUnlocked ? 'cursor-pointer hover:bg-slate-50 dark:hover:bg-dark-850' : ''}`}
+                onClick={handleCopyPhone}
+                className="flex items-center space-x-1.5 bg-white dark:bg-dark-900 border border-slate-205 dark:border-dark-850 px-3 py-1.5 rounded-lg shadow-sm cursor-pointer hover:bg-slate-50 dark:hover:bg-dark-850"
               >
                 <Phone className="w-3.5 h-3.5 text-primary-500" />
                 <span>{phoneUnlocked ? '+91 7434987924' : '+91 XXXXX XXXXX (🔒 Unlock)'}</span>
