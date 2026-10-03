@@ -5,7 +5,8 @@ const COMMANDS = [
   { id: 'home', label: 'Go to Home', desc: 'Scrolls to intro section', cmd: '/home' },
   { id: 'about', label: 'Go to About', desc: 'Scrolls to education timeline & metrics', cmd: '/about' },
   { id: 'skills', label: 'Go to Skills', desc: 'Scrolls to skills category index', cmd: '/skills' },
-  { id: 'projects', label: 'Go to Projects', desc: 'Scrolls to shopx & releases', cmd: '/projects' },
+  { id: 'projects', label: 'Go to Projects', desc: 'Scrolls to ShopX, AI Email Gen & releases', cmd: '/projects' },
+  { id: 'ai-email', label: 'Launch AI Email Generator', desc: 'Opens live AI-Powered Email Generator app', cmd: '/ai-email' },
   { id: 'experience', label: 'Go to Experience', desc: 'Scrolls to support & timeline logs', cmd: '/experience' },
   { id: 'contact', label: 'Go to Contact', desc: 'Scrolls to message form', cmd: '/contact' },
   { id: 'decrypt', label: 'Decrypt Secure Records', desc: 'Instantly decrypt GPA, phone, & socials', cmd: '/decrypt' },
@@ -102,6 +103,9 @@ export default function CommandPalette({
         break;
       case 'instagram':
         onOpenInstagram();
+        break;
+      case 'ai-email':
+        window.open('https://ai-email-generator-git-main-a-de03.vercel.app/', '_blank', 'noopener,noreferrer');
         break;
       default:
         break;
